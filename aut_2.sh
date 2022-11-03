@@ -1,9 +1,3 @@
-
-
-# При авторизации даётся 3 попытки на ввод пароля. Пароли в файле хранятся 
-#в виде хэшей. Направлять ошибки в файл, 
-#а сообщения о неуспешной авторизации (3 попытки прошли не успешно) в особенный новый файл.
-
 count=0
 while read -p 'Введите логин: ' login
 do 
@@ -11,7 +5,9 @@ do
     if [[ $(grep -w $login logins.txt) ]]
     then
         index_line=$(grep -n -w $login logins.txt | cut -d: -f1) # получаем номер строки для пароля 
-        user_password=$(cat passwords.txt | head -n$index_line | tail -n1 ) # получаем пароль по номеру строки
+        user_password=$(cat passwords.txt | head -n$index_line | tail -n1 ) # получаем пароль по номеру строки.
+        # head считывает отправленное количество строк сверху
+        # tail - сколько строк хотим прочитать
         read  -s -t 5 -p 'Введите пароль: ' password <&1
         password_hash=$(echo "$password" | md5sum)
         if [[ $password_hash == $user_password ]]
