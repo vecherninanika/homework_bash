@@ -7,7 +7,7 @@ do
         index_line=$(grep -n -w $login logins.txt | cut -d: -f1) # получаем номер строки для пароля 
         user_password=$(cat passwords.txt | head -n$index_line | tail -n1 ) # получаем пароль по номеру строки.
         # head считывает отправленное количество строк сверху
-        # tail - сколько строк хотим прочитать
+        # tail - берем последнюю строку из этих
         read  -s -t 5 -p 'Введите пароль: ' password <&1
         password_hash=$(echo "$password" | md5sum)
         if [[ $password_hash == $user_password ]]
